@@ -7,6 +7,9 @@ Worldline payment gateway for Android and iOS
 ```sh
 npm install react-native-worldline-payment-gateway
 ```
+```sh
+yarn add react-native-worldline-payment-gateway
+```
 
 ## Usage
 
