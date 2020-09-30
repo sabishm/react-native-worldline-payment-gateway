@@ -15,7 +15,13 @@ import WorldlinePaymentGateway from "react-native-worldline-payment-gateway";
 
 // ...
 
-const result = await WorldlinePaymentGateway.multiply(3, 7);
+WorldlinePaymentGateway.startPayment({
+        order_id: rand.toString(),
+        amount: '1300',
+        currency: 'INR',
+        description: 'Test Transaction from react native',
+        transaction_type: 'S',
+      }).then(setResponse);
 ```
 
 ## Contributing
