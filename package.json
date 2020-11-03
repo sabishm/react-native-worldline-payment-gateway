@@ -1,6 +1,6 @@
 {
   "name": "react-native-worldline-payment-gateway",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Worldline payment gateway for Android and iOS",
   "main": "src/index.tsx",
   "module": "lib/module/index.js",
