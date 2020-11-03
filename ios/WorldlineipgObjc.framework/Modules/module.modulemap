@@ -1,0 +1,6 @@
+framework module WorldlineipgObjc {
+  umbrella header "WorldlineipgObjc.h"
+
+  export *
+  module * { export * }
+}

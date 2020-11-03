@@ -1,16 +1,13 @@
 package com.reactnativeworldlinepaymentgateway
 
 import android.app.Activity
+import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.app.Instrumentation
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.preference.PreferenceManager
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.facebook.react.bridge.*
-import com.worldline.`in`.callback.ResultListener
 import com.worldline.`in`.constant.Param
-import com.worldline.`in`.ipg.PaymentStandard
 import org.json.JSONObject
 
 
@@ -23,12 +20,6 @@ class WorldlinePaymentGatewayModule(reactContext: ReactApplicationContext) : Rea
 
     init {
         reactContext.addActivityEventListener(this)
-      val applicationInfo = reactContext.packageManager.getApplicationInfo(reactContext.packageName,PackageManager.GET_META_DATA)
-      if(applicationInfo != null) {
-        key = applicationInfo.metaData?.getString("com.worldline.paymentgateway.KEY")
-        mid = applicationInfo.metaData?.getString("com.worldline.paymentgateway.MID")
-      }
-
     }
 
     override fun getName(): String {
@@ -38,15 +29,15 @@ class WorldlinePaymentGatewayModule(reactContext: ReactApplicationContext) : Rea
     @ReactMethod
     fun startPayment(map: ReadableMap, promise: Promise) {
       this.transactionCallBack = promise
-      val intent = Intent(reactApplicationContext, PaymentStandard::class.java)
+      val intent = Intent(reactApplicationContext, PaymentStandardCustom::class.java)
 
       intent.putExtra(Param.ORDER_ID, map.getString("order_id"))
       intent.putExtra(Param.TRANSACTION_AMOUNT, map.getString("amount"))
       intent.putExtra(Param.TRANSACTION_CURRENCY, map.getString("currency"))
       intent.putExtra(Param.TRANSACTION_DESCRIPTION, map.getString("description"))
       intent.putExtra(Param.TRANSACTION_TYPE, map.getString("transaction_type"))
-      intent.putExtra(Param.KEY, key)
-      intent.putExtra(Param.MID, mid)
+      intent.putExtra(Param.KEY, map.getString("key"))
+      intent.putExtra(Param.MID, map.getString("mid"))
       startActivityForResult(currentActivity!!, intent, paymentRequestCode, null)
     }
 
@@ -103,6 +94,8 @@ class WorldlinePaymentGatewayModule(reactContext: ReactApplicationContext) : Rea
         println(json.toString())
 
         transactionCallBack.resolve(json.toString())
+      } else if(resultCode == RESULT_CANCELED){
+        transactionCallBack.resolve("User Cancelled!")
       }
     }
   }
@@ -110,4 +103,6 @@ class WorldlinePaymentGatewayModule(reactContext: ReactApplicationContext) : Rea
   override fun onNewIntent(intent: Intent?) {
 
   }
+
+
 }

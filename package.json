@@ -1,23 +1,23 @@
 {
   "name": "react-native-worldline-payment-gateway",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Worldline payment gateway for Android and iOS",
-  "main": "lib/commonjs/index",
-  "module": "lib/module/index",
+  "main": "src/index.tsx",
+  "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
-  "react-native": "src/index",
+  "react-native": "src/index.tsx",
   "source": "src/index",
   "files": [
     "src",
     "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
     "android",
     "ios",
     "cpp",
     "react-native-worldline-payment-gateway.podspec",
-    "!lib/typescript/example",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__"
+    "!lib/typescript/example"
   ],
   "scripts": {
     "test": "jest",
@@ -119,7 +119,10 @@
       ]
     }
   },
-  "eslintIgnore": ["node_modules/", "lib/"],
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
   "prettier": {
     "quoteProps": "consistent",
     "singleQuote": true,
@@ -130,6 +133,11 @@
   "@react-native-community/bob": {
     "source": "src",
     "output": "lib",
-    "targets": ["commonjs", "module", "typescript"]
+    "targets": [
+      "aar",
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   }
 }
